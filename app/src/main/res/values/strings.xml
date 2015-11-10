@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">VideoApp</string>
+    <string name="playButtonString">Play</string>
+    <string name="pauseButtonString">Pause</string>
+    <string name="stopButtonString">Stop</string>
+    <string name="videoButtonString">See the Video :D</string>
+    <string name="soundButtonString">Back to sound</string>
+</resources>
