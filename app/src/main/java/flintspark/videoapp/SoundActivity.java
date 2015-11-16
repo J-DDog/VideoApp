@@ -2,6 +2,7 @@ package flintspark.videoapp;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.graphics.Color;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.view.View;
@@ -16,6 +17,9 @@ public class SoundActivity extends AppCompatActivity implements Runnable
     private MediaPlayer soundPlayer;
     private SeekBar soundSeekBar;
     private Thread soundThread;
+    private RelativeLayout mainLayout;
+
+    private int r, g, b;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -26,8 +30,12 @@ public class SoundActivity extends AppCompatActivity implements Runnable
         startButton = (Button) findViewById(R.id.playButton);
         pauseButton = (Button) findViewById(R.id.pauseButton);
         stopButton = (Button) findViewById(R.id.stopButton);
-        soundSeekBar = (SeekBar) findViewById(R.id.soundSeekBar);
         videoButton = (Button) findViewById(R.id.videoButton);
+
+        soundSeekBar = (SeekBar) findViewById(R.id.soundSeekBar);
+
+        mainLayout = (RelativeLayout) findViewById(R.id.mainLayout);
+
         soundPlayer = MediaPlayer.create(this.getBaseContext(), R.raw.fnaf);
 
         setupListeners();
@@ -44,7 +52,12 @@ public class SoundActivity extends AppCompatActivity implements Runnable
             @Override
             public void onClick(View v)
             {
+                r = (int) (Math.random() * 256);
+                g = (int) (Math.random() * 256);
+                b = (int) (Math.random() * 256);
+
                 soundPlayer.start();
+                mainLayout.setBackgroundColor(Color.rgb(r, g, b));
             }
         });
 
@@ -105,7 +118,20 @@ public class SoundActivity extends AppCompatActivity implements Runnable
 
         while (soundPlayer != null && currentPosition < soundTotal)
         {
-
+            try
+            {
+                Thread.sleep(300);
+                currentPosition = soundPlayer.getCurrentPosition();
+            }
+            catch(InterruptedException soundException)
+            {
+                return;
+            }
+            catch(Exception otherException)
+            {
+                return;
+            }
+            soundSeekBar.setProgress(currentPosition);
         }
     }
 }
